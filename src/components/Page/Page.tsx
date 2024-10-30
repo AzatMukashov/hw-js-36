@@ -1,12 +1,12 @@
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { PageData } from '../../types';
-import axiosAPI from '../../axiosAPI.ts';
-import { Container } from 'react-bootstrap';
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { PageData } from "../../types";
+import axiosAPI from "../../axiosAPI.ts";
+import { Container } from "react-bootstrap";
 
 const Page = () => {
-  const {pageName} = useParams();
-  const [page, setPage] = useState<PageData>({title: '', content: ''});
+  const { pageName } = useParams();
+  const [page, setPage] = useState<PageData>({ title: "", content: "" });
   useEffect(() => {
     const fetchPage = async () => {
       try {
@@ -14,10 +14,10 @@ const Page = () => {
         if (response.data) {
           setPage(response.data);
         } else {
-          console.log('page not found');
+          console.log("page not found");
         }
       } catch (error) {
-        console.error('error fetching page data:', error);
+        console.error("error fetching page data:", error);
       }
     };
     (async () => {

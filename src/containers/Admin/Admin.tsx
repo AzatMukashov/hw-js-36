@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axiosAPI from '../../axiosAPI.ts';
-import { PageData } from '../../types';
-import { Button, Container, Form } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axiosAPI from "../../axiosAPI.ts";
+import { PageData } from "../../types";
+import { Button, Container, Form } from "react-bootstrap";
 
 const Admin = () => {
   const [pages, setPages] = useState<string[]>([]);
-  const [selectedPage, setSelectedPage] = useState<string>('');
-  const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string>('');
+  const [selectedPage, setSelectedPage] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
   const navigate = useNavigate();
   useEffect(() => {
     const fetchPages = async () => {
@@ -17,39 +17,41 @@ const Admin = () => {
         if (response.data) {
           setPages(Object.keys(response.data));
         } else {
-          console.log('no pages found');
+          console.log("no pages found");
         }
       } catch (error) {
-        console.error('error fetching page:', error);
+        console.error("error fetching page:", error);
       }
     };
     (async () => {
       await fetchPages();
     })();
   }, []);
-  const handleChangePage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangePage = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const pageName = event.target.value;
     setSelectedPage(pageName);
     try {
       const response = await axiosAPI.get(`/pages/${pageName}.json`);
       if (response.data) {
-        const {title, content}: PageData = response.data;
+        const { title, content }: PageData = response.data;
         setTitle(title);
         setContent(content);
       } else {
-        console.log('page not found');
+        console.log("page not found");
       }
     } catch (error) {
-      console.error('error fetching page data:', error);
+      console.error("error fetching page data:", error);
     }
   };
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      await axiosAPI.put(`/pages/${selectedPage}.json`, {title, content});
+      await axiosAPI.put(`/pages/${selectedPage}.json`, { title, content });
       navigate(`/pages/${selectedPage}`);
     } catch (error) {
-      console.error('error updating page:', error);
+      console.error("error updating page:", error);
     }
   };
   return (
@@ -63,11 +65,13 @@ const Admin = () => {
             value={selectedPage}
             onChange={handleChangePage}
             required
-            style={{width: '25%'}}
+            style={{ width: "25%" }}
           >
             <option value="">Select a page</option>
-            {pages.map(page => (
-              <option key={page} value={page}>{page}</option>
+            {pages.map((page) => (
+              <option key={page} value={page}>
+                {page}
+              </option>
             ))}
           </Form.Control>
         </Form.Group>
@@ -78,7 +82,7 @@ const Admin = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            style={{width: '50%'}}
+            style={{ width: "50%" }}
           />
         </Form.Group>
         <Form.Group controlId="formContent" className="mb-3">
@@ -89,10 +93,12 @@ const Admin = () => {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             required
-            style={{width: '50%'}}
+            style={{ width: "50%" }}
           />
         </Form.Group>
-        <Button variant="primary" type="submit" className='mb-3'>Save</Button>
+        <Button variant="primary" type="submit" className="mb-3">
+          Save
+        </Button>
       </Form>
     </Container>
   );
