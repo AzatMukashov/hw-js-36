@@ -63,6 +63,7 @@ const Admin = () => {
             value={selectedPage}
             onChange={handleChangePage}
             required
+            style={{width: '25%'}}
           >
             <option value="">Select a page</option>
             {pages.map(page => (
@@ -77,6 +78,7 @@ const Admin = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
+            style={{width: '50%'}}
           />
         </Form.Group>
         <Form.Group controlId="formContent" className="mb-3">
@@ -87,10 +89,10 @@ const Admin = () => {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             required
-            style={{width: '75%'}}
+            style={{width: '50%'}}
           />
         </Form.Group>
-        <Button variant="primary" type="submit">Save</Button>
+        <Button variant="primary" type="submit" className='mb-3'>Save</Button>
       </Form>
     </Container>
   );
